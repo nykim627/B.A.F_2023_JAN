@@ -1,0 +1,23 @@
+# Lemmatize with POS Tag
+from nltk.corpus import wordnet
+
+def get_wordnet_pos(word):
+  #특정 단어의 품사(ex. VBD)의 앞글자(V)를 대문자로 추출
+    tag = nltk.pos_tag([word])[0][1][0].upper() 
+
+  #품사 딕셔너리 생성
+    tag_dict = {"J": wordnet.ADJ,
+                "N": wordnet.NOUN,
+                "V": wordnet.VERB,
+                "R": wordnet.ADV}
+
+    return tag_dict.get(tag, wordnet.NOUN)
+
+# 단어 표제어 추출
+lemmatizer = WordNetLemmatizer()
+word = 'was'
+print(lemmatizer.lemmatize(word, get_wordnet_pos(word)))
+
+# 문장 표제어 추출
+sentence = "i was a car"
+print([lemmatizer.lemmatize(w, get_wordnet_pos(w)) for w in nltk.word_tokenize(sentence)])
